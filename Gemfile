@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 # Bootstrap...
 gem 'bootstrap-generators', '~> 3.3.4'
+
+# Authentication
+gem 'devise'
