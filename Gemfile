@@ -38,3 +38,5 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Bootstrap...
+gem 'bootstrap-generators', '~> 3.3.4'
