@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
   respond_to :html
 
   def index
-    @players = Player.all
+    @players = Player.where(user: current_user)
     respond_with(@players)
   end
 

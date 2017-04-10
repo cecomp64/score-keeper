@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   respond_to :html
 
   def index
-    @games = Game.all
+    @games = Game.where(user: current_user)
     respond_with(@games)
   end
 
