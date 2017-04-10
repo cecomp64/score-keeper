@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :scores
+
+  resources :players
+
+  resources :games
+
   devise_for :users
   get 'static_pages/home'
 
