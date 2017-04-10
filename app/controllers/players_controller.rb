@@ -2,10 +2,14 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  respond_to :html
+  respond_to :html, :js
+
+  def set_players
+    @players = Player.where(user: current_user)
+  end
 
   def index
-    @players = Player.where(user: current_user)
+    set_players
     respond_with(@players)
   end
 
@@ -24,6 +28,7 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     @player.save
+    set_players
     respond_with(@player)
   end
 

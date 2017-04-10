@@ -1,33 +1,10 @@
 <% provide :page, 'players' %>
 
 <div class="page-header">
-  <%= link_to new_player_path, class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    New Player
-  <% end %>
   <h1>Players</h1>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-            <th>User</th>
-            <th>Name</th>
-            <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <%= content_tag_for(:tr, @players) do |player| %>
-            <td><%= player.user_id %></td>
-            <td><%= player.name %></td>
-            <td><%= link_to 'Show', player %></td>
-        <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <% end %>
-    </tbody>
-  </table>
+<div class="row" id="players">
+  <%= render 'index' %>
 </div>
+
