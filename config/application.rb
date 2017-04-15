@@ -21,3 +21,17 @@ module ScoreKeeper
     # config.i18n.default_locale = :de
   end
 end
+
+# Fix group for pg
+class ActiveRecord::Associations::CollectionProxy
+  def pg_group(column)
+    group = {}
+    self.each do |entry|
+      key = entry.send(column)
+      group[key] ||= []
+      group[key] << entry
+    end
+
+    return group
+  end
+end

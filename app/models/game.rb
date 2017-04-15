@@ -5,4 +5,8 @@ class Game < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name, :user_id
+
+  def rounds
+    scores.pg_group(:round).sort
+  end
 end

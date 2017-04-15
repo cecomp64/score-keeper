@@ -5,11 +5,12 @@ class GamesController < ApplicationController
   respond_to :html
 
   def index
-    @games = Game.where(user: current_user)
+    @games = current_user.games
     respond_with(@games)
   end
 
   def show
+    @players = @game.players
     respond_with(@game)
   end
 
@@ -22,8 +23,14 @@ class GamesController < ApplicationController
   end
 
   def create
+    players = params['game']['players']
+
     @game = Game.new(game_params)
-    @game.save
+
+    if (@game.save)
+      @game.players = Player.where(id: players)
+    end
+
     respond_with(@game)
   end
 
