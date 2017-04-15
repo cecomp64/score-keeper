@@ -5,3 +5,17 @@
     }
   }
 }
+
+a.list-group-item.selected {
+  background-color: limegreen;
+  font-weight: bold;
+  border-color: #5cb85c;
+  color: white;
+}
+
+a.list-group-item.selected:hover {
+  background-color: #5cb85c;
+  font-weight: bold;
+  border-color: #5cb85c;
+  color: white;
+}
