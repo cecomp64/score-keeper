@@ -30,11 +30,13 @@
             <td><%= round %></td>
             <% @players.each do |player| %>
                 <% score = scores.select{|score| score.player_id == player.id}.first %>
-                <%= content_tag :td, class: 'selectable', data: {field: 'game[scores]', value: score.id,
-                                                                 form: '#score-control',
-                                                                 score: score.score,
-                                                                 actions: 'updateForm,selectScore'} do %>
-                  <%= score.score %>
+                <%= content_tag :td, class: 'selectable', id: "score_#{score.id}",
+                                data: {field: 'game[scores]',
+                                       value: score.id,
+                                       form: '#score-control',
+                                       score: score.score,
+                                       actions: 'updateForm,selectScore'} do %>
+                  <%= score.score.to_i %>
                 <% end %>
             <% end %>
           </tr>
@@ -44,7 +46,7 @@
       </table>
     </div>
 
-    <%= form_tag('', remote: true, class: 'form', id: 'score-control') do %>
+    <%= form_tag(update_scores_path, remote: true, class: 'form', id: 'score-control') do %>
         <%= number_field_tag 'score', 0.0, class: 'form-control' %>
         <div class="btn-group" role="group" aria-label="...">
           <% ['+10', '+5', '+1', '-1', '-5', '-10'].each do |val| %>
@@ -54,7 +56,8 @@
           <% end %>
         </div>
         <%= hidden_field_tag 'next-round', next_round %>
-        <%= content_tag :button, 'Update Scores', class: 'btn btn-primary score-submit', type: 'button' %>
+        <%= hidden_field_tag 'id', @game.id %>
+        <%= content_tag :button, 'Update Scores', class: 'btn btn-primary score-submit', type: 'submit' %>
         <%= content_tag :button, 'Add Round', class: 'btn btn-primary score-round', type: 'button' %>
     <% end %>
   </div>

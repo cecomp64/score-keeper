@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
+  post 'update_scores' => 'games#update_scores', as: :update_scores
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

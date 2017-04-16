@@ -1,8 +1,8 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :update_scores]
   before_action :authenticate_user!
 
-  respond_to :html
+  respond_to :html, :js
 
   def index
     @games = current_user.games
@@ -37,6 +37,16 @@ class GamesController < ApplicationController
   def update
     @game.update(game_params)
     respond_with(@game)
+  end
+
+  def update_scores
+    @score_ids = params['game']['scores']
+    scores = Score.where(id: @score_ids)
+    @value = params['score']
+    scores.each do |score|
+      score.score = @value.to_f
+      score.save
+    end
   end
 
   def destroy
