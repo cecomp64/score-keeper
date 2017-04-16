@@ -23,12 +23,10 @@ class GamesController < ApplicationController
   end
 
   def create
-    players = params['game']['players']
-
     @game = Game.new(game_params)
 
     if (@game.save)
-      @game.players = Player.where(id: players)
+      update_players(params)
     end
 
     respond_with(@game)
@@ -36,6 +34,19 @@ class GamesController < ApplicationController
 
   def update
     @game.update(game_params)
+    update_players(params)
+
+    # Look for any missing scores
+    player_ids = @game.players.map(&:id)
+    @game.rounds.each do |round_arr|
+      round, scores = round_arr
+      player_ids.each do |player_id|
+        if(!scores.map(&:player_id).include?(player_id))
+          Score.create(game: @game, player_id: player_id, score: 0, round: round)
+        end
+      end
+    end
+
     respond_with(@game)
   end
 
@@ -61,5 +72,10 @@ class GamesController < ApplicationController
 
     def game_params
       params.require(:game).permit(:user_id, :name)
+    end
+
+    def update_players(params)
+      players = params['game']['players']
+      @game.players = Player.where(id: players)
     end
 end
