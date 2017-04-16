@@ -23,17 +23,33 @@
 
         <tbody>
         <% rounds = @game.rounds %>
+        <% next_round = 1 %>
         <% rounds.each do |round_arr| %>
           <% round, scores = round_arr %>
           <tr>
             <td><%= round %></td>
-            <%= content_tag_for(:td, @players) do |player| %>
-                <%= scores.select{|score| score.player_id == player.id}.first.score %>
+            <% @players.each do |player| %>
+                <%= content_tag :td, class: 'selectable', data: {} do %>
+                  <%= scores.select{|score| score.player_id == player.id}.first.score %>
+                <% end %>
             <% end %>
           </tr>
+          <% next_round += 1 %>
         <% end %>
         </tbody>
       </table>
     </div>
+
+    <%= form_tag('', remote: true, class: 'form') do %>
+        <%= number_field_tag 'score', 0.0, class: 'form-control' %>
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">+10</button>
+            <button type="button" class="btn btn-default">+5</button>
+            <button type="button" class="btn btn-default">+1</button>
+            <button type="button" class="btn btn-default">-1</button>
+            <button type="button" class="btn btn-default">-5</button>
+            <button type="button" class="btn btn-default">-10</button>
+          </div>
+    <% end %>
   </div>
 </div>

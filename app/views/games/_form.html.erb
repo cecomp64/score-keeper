@@ -21,7 +21,7 @@
 
       <ul class="list-group">
         <% current_user.players.each do |player| %>
-            <%= content_tag 'a', player.name, class: 'list-group-item selectable', id: "player_link_#{player.id}", data:{field: 'game[players]', value: player.id} %>
+            <%= content_tag 'a', player.name, class: 'list-group-item selectable', id: "player_link_#{player.id}", data:{field: 'game[players]', value: player.id, actions: 'updateForm'} %>
         <% end %>
       </ul>
 

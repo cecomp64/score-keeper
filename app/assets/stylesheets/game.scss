@@ -6,14 +6,14 @@
   }
 }
 
-a.list-group-item.selected {
+a.list-group-item.selected, .selected {
   background-color: limegreen;
   font-weight: bold;
   border-color: #5cb85c;
   color: white;
 }
 
-a.list-group-item.selected:hover {
+a.list-group-item.selected:hover, .selected:hover {
   background-color: #5cb85c;
   font-weight: bold;
   border-color: #5cb85c;
