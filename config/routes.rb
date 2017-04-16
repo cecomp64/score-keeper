@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   post 'update_scores' => 'games#update_scores', as: :update_scores
+  post 'add_round' => 'games#add_round', as: :add_round
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

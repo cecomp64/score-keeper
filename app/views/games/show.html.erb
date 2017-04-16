@@ -8,57 +8,6 @@
   <h1>Game <%= @game.name %></h1>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover table-game" id="score-table">
-        <thead>
-        <tr>
-          <th></th>
-          <% @players.each do |player| %>
-            <th><%= player.name %></th>
-          <% end %>
-        </tr>
-        </thead>
-
-        <tbody>
-        <% rounds = @game.rounds %>
-        <% next_round = 1 %>
-        <% rounds.each do |round_arr| %>
-          <% round, scores = round_arr %>
-          <tr>
-            <td><%= round %></td>
-            <% @players.each do |player| %>
-                <% score = scores.select{|score| score.player_id == player.id}.first %>
-                <%= content_tag :td, class: 'selectable', id: "score_#{score.id}",
-                                data: {field: 'game[scores]',
-                                       value: score.id,
-                                       form: '#score-control',
-                                       score: score.score,
-                                       actions: 'updateForm,selectScore'} do %>
-                  <%= score.score.to_i %>
-                <% end %>
-            <% end %>
-          </tr>
-          <% next_round += 1 %>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <%= form_tag(update_scores_path, remote: true, class: 'form', id: 'score-control') do %>
-        <%= number_field_tag 'score', 0.0, class: 'form-control' %>
-        <div class="btn-group" role="group" aria-label="...">
-          <% ['+10', '+5', '+1', '-1', '-5', '-10'].each do |val| %>
-              <%= content_tag :button, class: 'btn btn-default score-updater', type: 'button', data: {value: val.to_i} do %>
-                  <%= val %>
-              <% end %>
-          <% end %>
-        </div>
-        <%= hidden_field_tag 'next-round', next_round %>
-        <%= hidden_field_tag 'id', @game.id %>
-        <%= content_tag :button, 'Update Scores', class: 'btn btn-primary score-submit', type: 'submit' %>
-        <%= content_tag :button, 'Add Round', class: 'btn btn-primary score-round', type: 'button' %>
-    <% end %>
-  </div>
+<div class="row" id="score-table-partial">
+<%= render 'games/score_table' %>
 </div>

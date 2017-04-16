@@ -15,7 +15,7 @@
     $('#score').val(score)
 
 
-initScoreButtons = ->
+@initScoreButtons = ->
   # Adding a new round should be a call back to the server...
   #$('.score-round').click( ->
     # Add a new round row
@@ -66,7 +66,7 @@ initScoreButtons = ->
   else
     $(form).append('<input id="' + id + '" name="' + field + '[]" type="hidden" value="' + value + '"/>')
 
-init_selectables = ->
+@init_selectables = ->
   $('.selectable').each (i, obj) ->
     $(obj).click( ->
       actions = $(obj).data('actions')

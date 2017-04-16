@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :update_scores]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :update_scores, :add_round]
   before_action :authenticate_user!
 
   respond_to :html, :js
@@ -60,9 +60,18 @@ class GamesController < ApplicationController
     @score_ids = params['game']['scores']
     scores = Score.where(id: @score_ids)
     @value = params['score']
+    @players = scores.map(&:player).uniq
     scores.each do |score|
       score.score = @value.to_f
       score.save
+    end
+  end
+
+  def add_round
+    @round = params['next-round'] || 1
+    @players = @game.players
+    @players.each do |player|
+      Score.create(game: @game, player: player, score: 0, round: @round)
     end
   end
 
