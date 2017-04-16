@@ -2,25 +2,26 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-# <input id="game_name" name="game[name]" placeholder="Name of the Game" type="text">
+# Specific functions
+@selectScore = (obj, selected) ->
+  console.log('[I] selectScore')
 
-# TODO: Define some common actions to take on selection:
-#  addForm - Add a hidden form
-#  udpateFields
+# Generic Functions....
 
 @updateForm = (obj, selected)->
   console.log('update!')
   value = $(obj).data('value')
   field = $(obj).data('field') || 'selectable'
+  form = $(obj).data('form') || obj
 
-  console.log('[I] updateForm - value: ' + value + ' field: ' + field)
+  console.log('[I] updateForm - value: ' + value + ' field: ' + field + ' form: ' + form)
+  id = field + value
+  id = id.replace(/[\[\]]/g, '_')
 
   if(selected)
-    $(obj).children('#' + field + '_' + value).remove()
+    $(form).children('#' + id).remove()
   else
-    $(obj).append('<input id="' + field + '_' + value + '" name="' + field + '[]" type="hidden" value="' + value + '">')
-
-#window.updateForm = updateForm
+    $(form).append('<input id="' + id + '" name="' + field + '[]" type="hidden" value="' + value + '"/>')
 
 init_selectables = ->
   $('.selectable').each (i, obj) ->

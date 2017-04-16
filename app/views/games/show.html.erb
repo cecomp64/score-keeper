@@ -29,8 +29,9 @@
           <tr>
             <td><%= round %></td>
             <% @players.each do |player| %>
-                <%= content_tag :td, class: 'selectable', data: {} do %>
-                  <%= scores.select{|score| score.player_id == player.id}.first.score %>
+                <% score = scores.select{|score| score.player_id == player.id}.first %>
+                <%= content_tag :td, class: 'selectable', data: {field: 'game[scores]', value: score.id, form: '#score-control', actions: 'updateForm'} do %>
+                  <%= score.score %>
                 <% end %>
             <% end %>
           </tr>
@@ -40,16 +41,16 @@
       </table>
     </div>
 
-    <%= form_tag('', remote: true, class: 'form') do %>
+    <%= form_tag('', remote: true, class: 'form', id: 'score-control') do %>
         <%= number_field_tag 'score', 0.0, class: 'form-control' %>
-          <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">+10</button>
-            <button type="button" class="btn btn-default">+5</button>
-            <button type="button" class="btn btn-default">+1</button>
-            <button type="button" class="btn btn-default">-1</button>
-            <button type="button" class="btn btn-default">-5</button>
-            <button type="button" class="btn btn-default">-10</button>
-          </div>
+        <div class="btn-group" role="group" aria-label="...">
+          <% ['+10', '+5', '+1', '-1', '-5', '-10'].each do |val| %>
+              <%= content_tag :button, class: 'btn btn-default score-updater', type: 'button', data: {value: val.to_i} do %>
+                  <%= val %>
+              <% end %>
+          <% end %>
+        </div>
+        <%= content_tag :button, 'Update Scores', class: 'btn btn-primary score-submit', type: 'button' %>
     <% end %>
   </div>
 </div>
