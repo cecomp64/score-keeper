@@ -24,9 +24,15 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    num_rounds = params['game']['rounds'].to_i
 
     if (@game.save)
       update_players(params)
+      num_rounds.times do |round|
+        @game.players.each do |player|
+          Score.create(round: round+1, player: player, game: @game, score: 0)
+        end
+      end
     end
 
     respond_with(@game)

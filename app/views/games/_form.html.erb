@@ -16,6 +16,9 @@
       <%= f.hidden_field :user_id, value: current_user.id %>
       <h2>Name of the Game</h2>
       <%= f.text_field :name, class: "form-control", placeholder: 'Name of the Game' %>
+      <% if @game.id.nil? %>
+          <%= f.number_field :rounds, class: "form-control", placeholder: 'Initial Number of Rounds', value: 1 %>
+      <% end %>
 
       <h2>Players</h2>
 
