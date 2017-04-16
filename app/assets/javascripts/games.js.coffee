@@ -4,9 +4,52 @@
 
 # Specific functions
 @selectScore = (obj, selected) ->
-  console.log('[I] selectScore')
+  form = $(obj).data('form') || obj
+  value = $(obj).data('value')
+  score = $(obj).data('score')
+
+  #console.log('[I] selectScore - ' + printData($(obj).data()))
+  console.log('[I] selectScore - value: ' + value + ' score: ' + score + ' form: ' + form + ' selected: ' + selected)
+
+  if(selected)
+    $('#score').val(score)
+
+
+initScoreButtons = ->
+  # Adding a new round should be a call back to the server...
+  #$('.score-round').click( ->
+    # Add a new round row
+    # Update next-round
+  #)
+
+  #$('.score-submit').click( ->
+    # Update scores in table
+    #score_form = $('#score-control')
+    #score_ids = $(score_form).children()
+    # Update scores in database
+  #)
+
+  $('.score-updater').each (i, obj) ->
+    $(obj).click( ->
+      updater = $(obj).data()
+      score = parseInt($('#score').val())
+      score += parseInt(updater.value)
+      $('#score').val(score)
+    )
 
 # Generic Functions....
+
+@printData = (obj, selected=false) ->
+  str = ''
+  for key in obj
+    console.log(key + ': ' + obj[key])
+    str += key + ': ' + obj[key] + ' '
+
+  return str
+
+
+@sanitizeSelector = (sel) ->
+  sel.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" )
 
 @updateForm = (obj, selected)->
   console.log('update!')
@@ -18,7 +61,7 @@
   id = field + value
   id = id.replace(/[\[\]]/g, '_')
 
-  if(selected)
+  if(!selected)
     $(form).children('#' + id).remove()
   else
     $(form).append('<input id="' + id + '" name="' + field + '[]" type="hidden" value="' + value + '"/>')
@@ -40,6 +83,8 @@ init_selectables = ->
       else
         $(obj).addClass('selected')
 
+      selected = !selected
+
       # Iterate over all actions
       $.each(actions, (i, action)->
         fn = window[action]
@@ -53,6 +98,7 @@ init_selectables = ->
 
 document.addEventListener "turbolinks:load", (event) ->
   init_selectables()
+  initScoreButtons()
 
 #$(document).ready(init_selectables)
 #$(document).on('page:load', init_selectables)
