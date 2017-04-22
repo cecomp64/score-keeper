@@ -43,7 +43,7 @@
   </div>
 </div>
 
-<div class="col-xs-12">
+<div class="col-xs-12 space">
   <%= form_tag(add_round_path, remote: true) do %>
       <%= hidden_field_tag 'id', @game.id %>
       <%= hidden_field_tag 'next-round', next_round %>
@@ -53,13 +53,13 @@
 
 <div class="col-xs-12">
   <%= form_tag(update_scores_path, remote: true, class: 'form', id: 'score-control') do %>
-      <div class="input-group">
+      <div class="input-group space">
         <%= number_field_tag 'score', 0, class: 'form-control' %>
         <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">Update Scores</button>
           </span>
-      </div><!-- /input-group -->
-      <div class="btn-group" role="group" aria-label="...">
+      </div>
+      <div class="btn-group score-buttons" role="group" aria-label="...">
         <% ['+10', '+5', '+1', '-1', '-5', '-10'].each do |val| %>
             <%= content_tag :button, class: 'btn btn-default score-updater', type: 'button', data: {value: val.to_i} do %>
                 <%= val %>
