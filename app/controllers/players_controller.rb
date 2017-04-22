@@ -9,8 +9,8 @@ class PlayersController < ApplicationController
   end
 
   def player_info
-    game = Game.where(id: params[:game]).first
-    @scores = @player.scores.where(game: game).order(:round)
+    @game = Game.where(id: params[:game]).first
+    @scores = @player.scores.where(game: @game).order(:round)
   end
 
   def index
