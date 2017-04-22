@@ -1,11 +1,16 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_action :set_player, only: [:show, :edit, :update, :destroy, :player_info]
   before_action :authenticate_user!
 
   respond_to :html, :js
 
   def set_players
     @players = Player.where(user: current_user)
+  end
+
+  def player_info
+    game = Game.where(id: params[:game]).first
+    @scores = @player.scores.where(game: game).order(:round)
   end
 
   def index

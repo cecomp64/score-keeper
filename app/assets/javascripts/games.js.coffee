@@ -2,6 +2,27 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
+@init_players = ->
+  $('.player-modal').each( (i,obj) ->
+    modal = $(obj).data('modal')
+    game = $(obj).data('game')
+    player = $(obj).data('player')
+
+    $(obj).click( ->
+      # Clear the existing data
+      $(modal).find('.modal-body').html('')
+      $(modal).find('.modal-title').html('Loading...')
+
+      # Query for the player's data
+      $.ajax('/player_info.js', {data: {game: game, id: player}})
+
+      # Show the data
+      $(modal).modal('show')
+    )
+  )
+
+
 # Specific functions
 @selectScore = (obj, selected) ->
   form = $(obj).data('form') || obj
@@ -99,6 +120,7 @@
 document.addEventListener "turbolinks:load", (event) ->
   init_selectables()
   initScoreButtons()
+  init_players()
 
 #$(document).ready(init_selectables)
 #$(document).on('page:load', init_selectables)
