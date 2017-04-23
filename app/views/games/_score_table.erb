@@ -16,7 +16,7 @@
       <% rounds.each do |round_arr| %>
           <% round, scores = round_arr %>
           <tr>
-            <td><%= round %></td>
+            <td class="round-modal" data-game="<%=@game.id%>" data-round="<%=round%>" data-modal="#myModal"><%= round %></td>
             <% @players.each do |player| %>
                 <% score = scores.select{|score| score.player_id == player.id}.first %>
                 <%= content_tag :td, class: 'selectable', id: "score_#{score.id}",

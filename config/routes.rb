@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   get 'player_info' => 'players#player_info', as: :player_info
+  get 'round_info' => 'scores#round_info', as: :round_info
   post 'update_scores' => 'games#update_scores', as: :update_scores
   post 'add_round' => 'games#add_round', as: :add_round
 

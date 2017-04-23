@@ -2,7 +2,17 @@ class ScoresController < ApplicationController
   before_action :set_score, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  respond_to :html
+  respond_to :html, :js
+
+  def round_info
+    @game = Game.where(id: params[:game]).first
+    @round = params[:round]
+    @scores = Score.where(game: @game, round: @round).order(:player_id).includes(:player)
+
+    respond_to do |format|
+      format.js { render 'players/player_info'}
+    end
+  end
 
   def index
     @scores = Score.all

@@ -1,6 +1,5 @@
 
     <%= hidden_field_tag 'id', @game.id %>
-    <%= hidden_field_tag 'game[player_id]', @player.id %>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
   <div class="carousel-inner" role="listbox">
         <% @scores.each_with_index do |score, i| %>
@@ -8,7 +7,11 @@
             <!-- Wrapper for slides -->
             <div class="item <%= i==0 ? 'active' : ''%>">
 
-              <h3>Round <%= score.round %></h3>
+              <% if @player %>
+                  <h3>Round <%= score.round %></h3>
+              <% elsif @round %>
+                  <h3><%= score.player.name %></h3>
+              <% end %>
               <%= number_field_tag "game[scores][#{score.id}]", score.score, class: 'form-control' %>
             </div>
         <% end %>
