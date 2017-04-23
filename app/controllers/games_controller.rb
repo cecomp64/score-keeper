@@ -57,11 +57,13 @@ class GamesController < ApplicationController
   end
 
   def update_scores
-    @score_ids = params['game']['scores']
+    @form_scores = params['game']['scores']
+    @score_ids = @form_scores.is_a?(Hash) ? @form_scores.keys : @form_scores
+
     scores = Score.where(id: @score_ids)
-    @value = params['score']
     @players = scores.map(&:player).uniq
     scores.each do |score|
+      @value = @form_scores.is_a?(Hash) ? @form_scores[score.id.to_s] : params['score']
       score.score = @value.to_f
       score.save
     end

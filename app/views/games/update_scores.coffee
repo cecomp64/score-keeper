@@ -1,6 +1,9 @@
+$('#myModal').modal('hide')
+
 <% @score_ids.each do |sid| %>
-$('#score_<%=sid%>').html('<%=@value%>')
-$('#score_<%=sid%>').data('score', '<%=@value%>')
+<% value = @form_scores.is_a?(Hash) ? @form_scores[sid].to_i : @value %>
+$('#score_<%=sid%>').html('<%=value%>')
+$('#score_<%=sid%>').data('score', '<%=value%>')
 $('#score_<%=sid%>').fadeOut(500).fadeIn(1000)
 <% end %>
 

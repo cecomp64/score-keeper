@@ -33,3 +33,29 @@ a.list-group-item.selected:hover, .selected:hover {
   margin: 0 auto;
   display: block;
 }
+
+
+.carousel-indicators {
+  bottom: 20px;
+
+  li {
+    background-color: black;
+  }
+}
+
+.carousel-navigation {
+  height: 60px;
+}
+
+.carousel-left{
+  float: left;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.carousel-right{
+  float: right;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
