@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'static_pages#home'
+  root 'games#index'
 
   get 'player_info' => 'players#player_info', as: :player_info
   get 'round_info' => 'scores#round_info', as: :round_info
